@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white">
+<nav class="navbar navbar-expand-lg navbar-light " id="navbar">
   <a href="{% url 'index' %}" class="navbar-brand">
     <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt=""></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -8,7 +8,7 @@
 <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 20%;">
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <button class="btn btn-outline my-2 my-sm-0" style="color:black; " type="submit">Search</button>
     </form>
   </div>
   <div class="navbar-nav">
@@ -43,7 +43,7 @@
           fill-rule="evenodd"></path>
       </svg>
     </a>
-    <a class="nav-item nav-link" href="{% url 'profile' %}">
+    <a class="nav-item nav-link" href="{% url 'profile' user.username %}">
       <svg aria-label="Profile" class="_8-yf5 " fill="#262626" height="24" viewBox="0 0 48 48" width="24">
         <g>
           <path

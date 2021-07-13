@@ -1,35 +1,117 @@
-{%extends 'base.html'%}
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
 {% block content %}
-            {% for post in posts %}
-            <div class="feed" style="width: 50%;box-shadow: 5px #777;border: 1px solid #777;">
-                <section class="username">
-                    <div class="image">
-                        {% for profile in profiles%}
-                            {% if profile.user == post.user %}
-                            <a href="{% url 'index' %}"><img src="{{profile.profile_picture.url}}"></a>
-                            {% endif %}
-                        {% endfor %}
+<div class="container " id="index">
+    <div class="row">
+        
+            
+                <div class="modal fade" id="imageUpload" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Post Image</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="" method="post" enctype="multipart/form-data" novalidate>
+                                    {% csrf_token %}
+                                    {{ form|crispy }}
+                                    <button class="btn btn-sm btn-success">Upload</button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger" data-dismiss="modal">
+                                        Close
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    <div class="id">
-                        <a href="">{{post.user.username}}</a>
-                    </div>
-                </section>
-                <section class="post">
-                    <img src="{{post.image.url}}">
-                </section>
-                <section class="btn-group">
-                    <a href="#" type="button" class="btn-love"><i  class="far fa-heart fa-lg"></i></a>
-                    <a href="{% url 'new_comment' %}" type="button" class="btn-comment"><i class="far fa-comment fa-lg"></i></a>
-                    <a type="button" class="btn-share"><i class="fas fa-share fa-lg "></i></a>
-                    <a type="button" class="btn-bookmark"><i class="far fa-bookmark fa-lg"></i></a>
-                </section>
-                <section class="caption">
-                    <p class="like"> <i class="fas fa-heart"></i> 20 likes</p>
-                    <p><b><a class="id" href="#">{{post.author.username}}</a></b> {{post.caption}}</p>
+                </div>
+            </div>
+
+                <button class="btn btn-sm btn-outline-primary ml-4 mb-3 create" data-toggle="modal" data-target="#imageUpload">
+                    Create Post Here
+                </button>
+        <div class="col-md-7 mb-4">
+            {% for image in images %}
+            <div class="card post-card">
+                <div class="card-title">
+                    <img src="{{image.user.profile_picture.url}}" class="rounded-circle border account-img  mr-3"
+                        alt="{{image.user.user.username}}" width="35" height="35">
+                    <a href="{% url 'user_profile' image.user.user.username  %}" class="mt-4 user">{{image.user.user.username|title}}</a>
+                </div>
+                <div class="card-body mb-4">
                     
-                    <p class="time">5 minute ago</p>
-                </section>
+                        <img src="{{image.image.url}}"class="card-img" height="100%" />
+                    </div>
+                    
+                
+                <div class="iconic ml-2">
+                    <button class="btn btn-sm" type="submit" name="image_id" value="{{image.id}}">
+                        <a href="{% url 'comment' image.id %}"><i class="far fa-heart hearticon mx-auto"aria-hidden="true" ></i></a>
+                    </button>
+                    <button class="btn btn-sm" type="submit"><a href="{% url 'comment' image.id %}"><i
+                            class="far fa-comment hearticon mx-auto" aria-hidden="true"></i>
+                    </a></button>
+                </div>
+                <span class="ml-4 mb-1"><strong>{{image.likes.count}} like{{image.likes.count|pluralize}}</strong></span>
+                <span class="text-secondary ml-4 viewall"><a href="{% url 'comment' image.id %}">view all {{image.comments.count}} comment{{image.comments.count|pluralize}}</a></span>
+                <div class="allcomments mb-4">
+                    {% for comment in image.comments.all|slice:'2' %}
+                    <div class="comment">
+                        <div class="ml-4"><strong>{{ comment.user.user.username }}</strong> <span
+                                class="text-secondary">{{ comment.comment }}</span>
+                        </div>
+                    </div>
+                    {% empty %}
+                    {% endfor %}
+                    <p class="text-secondary ml-4">{{image.created|timesince}}</p>
+                </div>
             </div>
             {% endfor %}
-  
+        </div>
+
+
+
+
+
+        <div class="col-md-5  ">
+            
+                <div class="row">
+                    <div class="col-md-3 ml-2">
+                        <img class="rounded-circle user-img" src="{{ user.profile.profile_picture.url }}">
+                    </div>
+                    <div class="col-md-6 mt-4 user-detail">
+                        <span class=" text-secondary"><a
+                                href="{% url 'user_profile' user.username %}">{{ user.username }}</a></span> <br>
+                        <span class=" inname">{{ user.profile.name }}</span>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="card mt-4 mr-2 ml-2">
+                                <div class="card-title text-secondary mt-2 mr-2 ml-2 ">Suggestions For You
+                                </div>
+                                {% for user in users %}
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-2 mr-3 mt-1 mb-2">
+                                            <img class="rounded-circle" src="{{ user.profile.profile_picture.url }}" width="45px" height="45px">
+                                        </div>
+                                        <div class="col-md-6 mr-2 mt-2">
+                                            <span><a href="{% url 'user_profile' user.username  %}">{{user.username}}</a></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>    
+                        </div>
+                    </div>
+                </div>
+            
+        </div>
+    </div>
+</div>
+
 {% endblock %}

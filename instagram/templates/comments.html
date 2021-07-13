@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+{{block.super}}
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-6 pt-3">
+      <img src="{{image.image.url}}" alt="img" class="img-responsive card-img-top" style="height: 90vh;">
+    </div>
+    <div class="col-md-4 mt-3 pt-3 border">
+      <div>
+        <div>
+          <img src="{{image.user.profile.profile_pic.url}}" class="rounded-circle border" alt="{{image.user.profile.profile_pic.url}}" width="80" height="80">
+        </div>
+        <div>
+          <p class="text ml-3 pt-2"><small><strong>{{image.user.username}}</strong></small></p>
+          <p class="text ml-3"><small>{{image.name}}</small></p>
+        </div>
+        <hr>
+        <hr>
+      </div>
+      <div id="side">
+        {% if image.all_comments %}
+        {% for comment in image.all_comments %}
+        <div class="flex">
+          <div>
+            <a href="{% url 'others_profile' comment.user.id  %}">
+              <img src="{{comment.user.profile.profile_pic.url}}" class="rounded-circle border" alt="img" width="50"
+                height="50">
+            </a>
+          </div>
+          <div>
+            <p class="ml-2"><span class="font-weight-bold">{{comment.user.username}}</span> {{comment.comment}}</p>
+          </div>
+        </div>
+        <hr>
+        {% endfor %}
+        {% else %}
+      </div>
+      <h6 class="text-center">Be the first to comment below</h6>
+      {% endif %}
+      <form action="{% url 'comment' post_id=post.id %}" method="post">
+        {% csrf_token %}
+        <fieldset class="form-group">
+          {{comment_form|crispy}}
+        </fieldset>
+      </form>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+</div>
+<br><br>
+{% endblock %}
