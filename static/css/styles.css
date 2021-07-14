@@ -1,5 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Yatra+One&family=Zen+Tokyo+Zoo&display=swap');
+
 body {
   background-color: rgba(141, 137, 137, 0);
+  font-family: 'Yatra One', cursive;
 }
 
 .navbar{
