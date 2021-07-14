@@ -1,4 +1,4 @@
-# Insta-Dark
+# Insta-Clone
 
 An instagram clone that has similar functionalities with instagram.The users get to create profiles of their own to be able to upload images with captions on them.They can also view images uploaded by other users.Apart from viewing they can also comment and like the photos.
 
