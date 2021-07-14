@@ -57,7 +57,7 @@ Open the application on your browser `127.0.0.1:8000`.
 
 ![alt text](https://github.com/Tajeu2001/instagram-clone/blob/master/static/images/home.png)
 
-### View of the search_results page
+### View of the profile page
 
 
 ![alt text](https://github.com/Tajeu2001/instagram-clone/blob/master/static/images/profile.png)
