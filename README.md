@@ -55,12 +55,12 @@ Open the application on your browser `127.0.0.1:8000`.
 
 ### View of the application homepage
 
-![alt text]()
+![alt text](https://github.com/Tajeu2001/instagram-clone/blob/master/static/images/home.png)
 
 ### View of the search_results page
 
 
-![alt text]()
+![alt text](https://github.com/Tajeu2001/instagram-clone/blob/master/static/images/profile.png)
 
 ## User Story
 
