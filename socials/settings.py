@@ -13,7 +13,18 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 from decouple import config, Csv
 import dj_database_url
+import django_heroku
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
+
+cloudinary.config( 
+    cloud_name = "instagram-santa", 
+    api_key = "891768422865438", 
+    api_secret = "GokPH3gkx3sgDlc3mF7YhXbZs2g",
+    secure = True
+    )
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -43,6 +54,7 @@ INSTALLED_APPS = [
     'tinymce',
     'bootstrap3',
     'crispy_forms',
+    'cloudinary',
     
 ]
 
@@ -56,6 +68,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
 ]
 
 ROOT_URLCONF = 'socials.urls'
@@ -91,6 +105,7 @@ DATABASES = {
     }
 }
 
+db_from_env = dj_database_url.config(conn_max_age=500)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -127,17 +142,25 @@ USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # Base url to serve media files
 MEDIA_URL = '/media/'
 
 # Path where media is stored
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+django_heroku.settings(locals())
+
 
 LOGIN_REDIRECT_URL = 'index'
 

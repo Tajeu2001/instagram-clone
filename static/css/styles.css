@@ -23,8 +23,8 @@ body {
 }
 
 .post-card {
-  height:600px;
-  width:600px;
+  height:700px;
+  width:700px;
   margin-bottom: 50px;
   background-color: #c2cad062;
 }
@@ -33,4 +33,13 @@ body {
   height:600px;
   width:600px;
   background-color: #c2cad052;
+}
+
+#pic-url{
+  width: 20px;
+  height:20px;
+}
+
+#suggestions{
+  margin-right: 2%;
 }
